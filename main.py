@@ -43,7 +43,7 @@ def resume_song(status: StringVar):
 
 # Creating the master GUI
 root = Tk()
-root.geometry('700x220')     #
+root.geometry('700x220')
 root.title('Music N More Music Player')
 root.resizable(0, 0)
 root.iconbitmap('C:/Class12/Computer/musicnmore/music.ico')
@@ -64,7 +64,7 @@ current_song = StringVar(root, value='<Not selected>')
 song_status = StringVar(root, value='<Not Available>')
 
 # Playlist ListBox
-playlist = Listbox(listbox_frame, font=('Helvetica', 11), selectbackground='salmon')
+playlist = Listbox(listbox_frame, font=('Helvetica', 11), selectbackground='#22242E')
 
 scroll_bar = Scrollbar(listbox_frame, orient=VERTICAL)
 scroll_bar.pack(side=RIGHT, fill=BOTH)
