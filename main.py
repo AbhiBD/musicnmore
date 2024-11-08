@@ -19,16 +19,6 @@ root.title('Music N More Music Player')
 root.resizable(0, 0)
 root.iconbitmap(full_path)
 
-# Import necessary modules
-from tkinter import *
-from tkinter import filedialog, ttk  # Added ttk for Progressbar
-import pygame.mixer as mixer         # pip install pygame
-import os
-from mutagen.mp3 import MP3           # pip install mutagen
-
-# Initialize the mixer
-mixer.init()
-
 # Variables
 current_song = StringVar(root, value='<Not selected>')
 song_status = StringVar(root, value='<Not Available>')
