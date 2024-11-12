@@ -5,6 +5,7 @@ import pygame.mixer as mixer         # pip install pygame
 import os
 from mutagen.mp3 import MP3           # pip install mutagen
 import mysql.connector as sql
+import csv
 
 first_choice = 'restart'
 
