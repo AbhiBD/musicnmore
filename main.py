@@ -6,16 +6,29 @@ import os
 from mutagen.mp3 import MP3           # pip install mutagen
 import mysql.connector as sql
 import csv
-
-first_choice = 'restart'
+import random
 
 # Connecting SQL Database
-
-db = sql.connect(host="localhost", user="root", passwd='mysql', database="proj")
+db = sql.connect(host="localhost", user="root", passwd='mysql', database="proj", use_pure=True)
 pointer = db.cursor()
+
+mixer.init()
 
 def gui():
         
+        print(r"""
+                                  ___   _                                 
+/'\_/`\              _           (  _`\(_ )                               
+|     | _   _   ___ (_)   ___    | |_) )| |    _ _  _   _    __   _ __    
+| (_) |( ) ( )/',__)| | /'___)   | ,__/'| |  /'_` )( ) ( ) /'__`\( '__)   
+| | | || (_) |\__, \| |( (___    | |    | | ( (_| || (_) |(  ___/| |      
+(_) (_)`\___/'(____/(_)`\____)   (_)   (___)`\__,_)`\__, |`\____)(_)      
+                                                   ( )_| |                
+                                                   `\___/'                                                                                                                                                                   
+""")
+
+
+
         absolute_path = os.path.dirname(__file__)
         relative_path1 = "music.ico"
         full_path1 = os.path.join(absolute_path, relative_path1)
@@ -103,18 +116,16 @@ def gui():
             mixer.music.unpause()
             status.set("Song RESUMED")
         
+        relative_path2 = 'songs/playlist.csv'
+        full_path2 = os.path.join(absolute_path, relative_path2)
+
         # Function to save the current playlist to a CSV file
-        def save_playlist(playlist, filename="songs/playlist.csv"):
+        def save_playlist(playlist, filename=full_path2):
             with open(filename, 'w', newline='', encoding='utf-8') as csvfile:
                 writer = csv.writer(csvfile)
                 for song in playlist.get(0, END):  # Get all songs in the Listbox
                     writer.writerow([song])
             print("Playlist saved to", filename)
-        
-        
-        
-        relative_path2 = 'songs\playlist.csv'
-        full_path2 = os.path.join(absolute_path, relative_path2)
         
         # Function to load a playlist from a CSV file
         def load_playlist_from_csv(playlist, filename=full_path2):
@@ -208,7 +219,10 @@ def gui():
 
 # Adding a song to the SQL Table
 
+
+
 def addSong():
+    
     global db
     global pointer
     Track = str(input("Enter song name: "))
@@ -340,6 +354,7 @@ def removeSong():
 # Displaying the songs in the Playlist Table
 
 def displayPlaylist():
+    
     global db
     global pointer
     query='SELECT * FROM playlist;'
@@ -351,6 +366,19 @@ def displayPlaylist():
 # Defining the function to run the SQL Code
 
 def main_sql():
+
+    print(r"""
+          
+                                  ___   _                  _             _                                                                          _   
+/'\_/`\              _           (  _`\(_ )               (_ )  _       ( )_    /'\_/`\                                                            ( )_ 
+|     | _   _   ___ (_)   ___    | |_) )| |    _ _  _   _  | | (_)  ___ | ,_)   |     |   _ _   ___     _ _    __     __    ___ ___     __    ___  | ,_)
+| (_) |( ) ( )/',__)| | /'___)   | ,__/'| |  /'_` )( ) ( ) | | | |/',__)| |     | (_) | /'_` )/' _ `\ /'_` ) /'_ `\ /'__`\/' _ ` _ `\ /'__`\/' _ `\| |  
+| | | || (_) |\__, \| |( (___    | |    | | ( (_| || (_) | | | | |\__, \| |_    | | | |( (_| || ( ) |( (_| |( (_) |(  ___/| ( ) ( ) |(  ___/| ( ) || |_ 
+(_) (_)`\___/'(____/(_)`\____)   (_)   (___)`\__,_)`\__, |(___)(_)(____/`\__)   (_) (_)`\__,_)(_) (_)`\__,_)`\__  |`\____)(_) (_) (_)`\____)(_) (_)`\__)
+                                                   ( )_| |                                                  ( )_) |                                     
+                                                   `\___/'                                                   \___/'                                     
+""")
+    
     while True:
         print(
             """\nMusic Playlist Management:                                                                 (Courtesy of MusicNMore)
@@ -363,7 +391,7 @@ def main_sql():
         userChoice = input("Enter a choice:\n>")
         if userChoice == "5":
             db.close()
-            exit()
+            break
         elif userChoice == "1":
             addSong()
             print('\n ==================== \n')
@@ -377,18 +405,105 @@ def main_sql():
             search()
             print('\n ==================== \n')
 
-while first_choice=='restart':
+
+def quiz():
+
+    print(r"""
+                                  ___                                ___    _                       
+/'\_/`\              _           (  _`\                             (  _`\ ( )                      
+|     | _   _   ___ (_)   ___    | ( (_)   _ _   ___ ___     __     | (_(_)| |__     _    _   _   _ 
+| (_) |( ) ( )/',__)| | /'___)   | |___  /'_` )/' _ ` _ `\ /'__`\   `\__ \ |  _ `\ /'_`\ ( ) ( ) ( )
+| | | || (_) |\__, \| |( (___    | (_, )( (_| || ( ) ( ) |(  ___/   ( )_) || | | |( (_) )| \_/ \_/ |
+(_) (_)`\___/'(____/(_)`\____)   (____/'`\__,_)(_) (_) (_)`\____)   `\____)(_) (_)`\___/'`\___x___/'
+                                                                                                    
+                                                                                                    
+""")
+
+    L1=["Who is known as the 'Queen of Pop'?","a)Madonna b)Whitney Houston c)Britney Spears d)Lady Gaga",'a']
+
+    L2=["What is the name of Coldplay's debut album?","a)X&Y b)Parachutes c)Viva la Vida or Death and All His Friends d)A Rush of Blood to the Head",'b']
+    
+    L3=["Which member of The 1975 is the lead vocalist and guitarist?","a)Ross MacDonald b)George Daniel c)Matthew Healy d)Adam Hann",'c']
+    
+    L4=["Which song by The Strokes was released as the lead single from their 2003 album Room on Fire?","a)Reptilia b)Hard to Explain c)12:51 d)Under Control",'a']
+    
+    L5=["What year was the Red Hot Chili Peppers' debut album released?","a)1986 b)1991 c)1999 d)1983",'a']
+    
+    L6=["Which Taylor Swift album features the song 'Blank Space'?",'a)Reputation b)1989 c)Red d)Lover','b']
+    
+    L7=["What is the title of Gracie Abrams’ debut EP?","a)This Is What It Feels Like b)Minor c)Good Riddance d)Call It What It Is",'a']
+    
+    L8=["Which genre is Chappell Roan primarily known for?","a)Pop b)Indie Rock c)Country d)R&B",'a']
+    
+    L9=["What is the name of Chase Atlantic’s second studio album, released in 2020?","a)Phases b)Go on Then, Love c)Beauty in Death d)Chase Atlantic 2",'c']
+    
+    L10=["Which of these songs is NOT by The Neighbourhood?","a)'You Get Me So High' b)'Stargazing' c)'Im Sorry' d)'In the Morning'",'d']
+    
+    L11=["What is the name of Travis Scott's daughter?","a)Dream b)Stormi c)North d)Chicago",'b']
+    
+    L12=["Which song by The Weeknd won a Grammy for Best R&B Performance in 2016?","a)'The Hills' b)'Earned It' c)'Starboy' d)'In the Night'",'b']
+    
+    L13=["Which of these songs is from Beach House's 2010 album Teen Dream?","a)Myth b)Zebra c)Norway d)Silver Soul",'c']
+    
+    L14=["What is the real name of the Girl in Red","a)Maren b)Emily Vu c)Sophie Hunger d)Marie Ulven",'d']
+    
+    L15=["Which Kendrick Lamar album won the Pulitzer Prize for Music in 2018?","a)Section.80 b)To Pimp a Butterfly c)good kid, m.A.A.d city d)DAMN.",'d']
+    
+    L16=["Carwash is known for his contributions to which genre of music?",'a)Jazz b)Funk c)Electronic d)Hip-Hop','c']
+    
+    L17=["Sabrina Carpenter starred in which Disney Channel show, where she played the character Maya Hart?","a)Liv and Maddie b)The Suite Life of Zack & Cody c)Girl Meets World d)Andi Mack",'c']
+    
+    L18=["Which Arctic Monkeys album features the hit single 'Do I Wanna Know?'","a)Whatever People Say I Am, That's What I'm Not b)AM c) Humbug d)Suck It and See",'b']
+    
+    L19=["Which song by Lana Del Rey includes the lyrics, 'I am your man' and 'I am your man'?","a)Blue Jeans b)Freak c)The Blackest Day d)West Coast",'d']
+    
+    L20=["Which Juice WRLD song features the line, 'I still see your shadows in my room'?","a)All Girls Are the Same b)Robbery c)Legends d)Lucid Dreams",'d']
+    
+    L = [L1,L2,L3,L4,L5,L6,L7,L8,L9,L10,L11,L12,L13,L14,L15,L16,L17,L18,L19,L20]
+    
+    print ("Choose your Quiz Format")
+    
+    choice = int(input("Select the number of quiz questions you would like : "))
+
+    points = 0
+
+    for i in range (0,choice):
+
+        k = random.randint(0,20)
+
+        print (L[k][0])
+        print (L[k][1])
+
+        ans = input("enter your answer:")
+
+        if ans == L[k][2]:
+
+            points +=1
+
+        else:
+            continue
+    print ("CONGRATS! Your score is:",points,'out of',choice, "questions")
+
+first_choice = 'y'
+
+while first_choice in 'yY':
     print(
         """ Welcome to Music N More:
 
     [1] Music Player GUI
     [2] Music Playlist Management
-    [3] Exit"""
+    [3] Quiz
+    [4] Exit"""
     )
-    first_choice = input("Enter a choice:\n")
-    if first_choice == "1":
+    choice = input("Enter a choice:\n")
+    if choice == "1":
         gui()
-    elif first_choice == "2":
+        first_choice = input("Would you like to continue along the program? (y/n) ")
+    elif choice == "2":
         main_sql()
-    elif first_choice == "3":
+        first_choice = input("Would you like to continue along the program? (y/n) ")
+    elif choice == "3":
+        quiz()
+        first_choice = input("Would you like to continue along the program? (y/n) ")
+    elif choice == "4":
         break
