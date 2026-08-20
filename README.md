@@ -115,10 +115,10 @@ Music N More was developed as a practical Python application to explore GUI deve
 
 The project demonstrates:
 
-* GUI development with **Tkinter**
+* GUI development with **TKinter**
 * Event-driven programming
-* Audio playback with **Pygame**
-* MP3 metadata extraction with **Mutagen**
+* Audio playback with **PyGame**
+* MP3 metadata extraction with **mutagen**
 * File and directory handling
 * CSV data management
 * Playback state and progress tracking
